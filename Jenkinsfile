@@ -3,12 +3,11 @@ pipeline {
     tools {
         maven 'maven-3.9'
     }
-
     stages {
         stage("Build jar") {
             steps {
                 script{
-                    echo 'Building the application...'
+                    echo "Building the application..."
                     sh 'mvn package'
                 }
             }
@@ -17,10 +16,12 @@ pipeline {
             steps {
                 script{
                     echo 'Building the docker image...'
-                    withCredentials([usernamePassword(credentialsID: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])
+                    withCredentials([usernamePassword(credentialsID: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+
                         sh 'docker build -t raphaelinebode1996/demo-app:jma-2.0 .'
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
                         sh 'docker push aphaelinebode1996/demo-app:jma-2.0 '
+                    }
                 }
             }
         }
