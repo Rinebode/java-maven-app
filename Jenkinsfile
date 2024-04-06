@@ -32,7 +32,6 @@ pipeline {
             steps {
                 script {
                     buildImage 'raphaelinebode1996/demo-app:jma-3.0'
-                    dockerPush 'raphaelinebode1996/demo-app:jma-3.0'
                 }
             }
         }
